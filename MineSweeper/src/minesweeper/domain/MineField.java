@@ -5,15 +5,21 @@ class MineField {
 
 	private Map squares;
 	private List mineLocations; 
+	private 	int squareCount;
+	private int cols;
+	private int rows;
 
-	MineField() { 
-		squares = new HashMap(100);
+	MineField(int cols, int rows, int mines) { 
+		this.squareCount = cols * rows;
+		this.cols = cols;
+		this.rows = rows;
+		squares = new HashMap(squareCount);
 
-		for(int i=0;i<100;i++) {
-			squares.put(new Integer(i),new BlankSquare(i));
+		for(int i=0;i<squareCount;i++) {
+			squares.put(i,new BlankSquare(i));
 		}
 		
-		mineLocations = generateRandomNumbers(10);
+		mineLocations = generateRandomNumbers(mines);
 		
 		for(Iterator it = mineLocations.iterator();it.hasNext();) {
 			Integer location = (Integer)it.next();
@@ -34,7 +40,7 @@ class MineField {
 			}
 		}		
 		
-		for(int location =0;location<100;location++) {
+		for(int location =0;location<squareCount;location++) {
 
 			Square square = (Square)squares.get(new Integer(location));
 			List neighbors = getNeighbors(location);
@@ -43,6 +49,10 @@ class MineField {
 				square.addNeighbor((Square)(squares.get((Integer)it.next())));
 			}
 		}
+	}
+
+	public MineField() {
+		this(10,10,10);
 	}
 
 	void uncoverMineSquares() {
@@ -57,36 +67,36 @@ class MineField {
 		List neighbors = new ArrayList();
 
 		// if location is not on left side, then add neighbors from left
-		if (location%(10)!=0) {
-			neighbors.add(new Integer(location-1));
-			if (location>9) {
-				neighbors.add(new Integer(location-11));
+		if (location%(cols)!=0) {
+			neighbors.add(location-1);
+			if (location>(cols-1)) {
+				neighbors.add(location-(cols+1));
 			}
-			if (location<90) {
-				neighbors.add(new Integer(location+9));
+			if (location<(squareCount-cols)) {
+				neighbors.add(location+(cols-1));
 			}
 		}
 
 		// if location is not on right side, then add neighbors from right
-		if ((location+1)%(10)!=0){ 
-			neighbors.add(new Integer(location+1));
-			if (location>9) {
-				neighbors.add(new Integer(location-9));
+		if ((location+1)%(cols)!=0){ 
+			neighbors.add(location+1);
+			if (location>cols-1) {
+				neighbors.add(location-(cols-1));
 			}
 
-			if (location<90) {
-				neighbors.add(new Integer(location+11));
+			if (location<(squareCount-cols)) {
+				neighbors.add(new Integer(location+(cols+1)));
 			}
 		}
 
 		// if location is not on top, then add neighbors from top
-		if (location>9) {  
-			neighbors.add(new Integer(location-10));
+		if (location>(cols-1)) {  
+			neighbors.add(location-cols);
 		}
 
 		// if location is not on bottom, then add neighbors from bottom
-		if (location<90) { 
-			neighbors.add(new Integer(location+10));
+		if (location<squareCount-cols) { 
+			neighbors.add(location+cols);
 		}
 
 		return neighbors;
@@ -99,7 +109,7 @@ class MineField {
 			Integer random = null;
 
 			do {
-				random = new Integer((int)(Math.random()*100));
+				random = new Integer((int)(Math.random()*squareCount));
 			}while(randomNumbers.contains(random));
 
 			randomNumbers.add(random);
@@ -113,9 +123,9 @@ class MineField {
 
 		String board = "";
 
-		for(int i=0;i<10;i++) {
-			for(int j=0;j<10;j++) {
-				board = board + "|"+ squares.get(new Integer(j+(i*10)));
+		for(int i=0;i<rows;i++) {
+			for(int j=0;j<cols;j++) {
+				board = board + "|"+ squares.get(j+(i*cols));
 			}
 			board = board + "\n";
 		}
