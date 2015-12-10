@@ -6,7 +6,7 @@ class MineField {
 	private Map squares;
 	private List mineLocations; 
 
-	MineField() {
+	MineField() { 
 		squares = new HashMap(100);
 
 		for(int i=0;i<100;i++) {
