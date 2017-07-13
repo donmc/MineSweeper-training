@@ -92,7 +92,7 @@ class MineField {
 		return neighbors;
 	}
 
-	List generateRandomNumbers(int howMany) {
+	private List generateRandomNumbers(int howMany) {
 		List randomNumbers = new ArrayList(howMany);
 
 		for(int i=0;i<howMany;i++) {

@@ -39,9 +39,8 @@ public class MineSweeper implements IMineSweeper{
 	}
 
 	void checkForWin(Object lastNonMine) {
-		int numOfSquares = 100;
-		int numOfMines = 10;
-		if (uncoveredCount + numOfMines == numOfSquares) {
+		int numOfSquares = board.getSquares().size();
+		if (uncoveredCount + mineCount == numOfSquares) {
 			gameOver = true;
 			fireGameOver(true, lastNonMine);
 		}
