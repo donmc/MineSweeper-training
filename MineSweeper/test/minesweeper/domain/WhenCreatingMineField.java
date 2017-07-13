@@ -52,5 +52,25 @@ public class WhenCreatingMineField {
     assertTrue(((Square)squares.get(41)).getValue() == 3);
     System.out.println(field);
   }
+  @Test
+  public void shouldHaveSquaresInCorrectPlaceForCustomBoard() {
+    MineField field = new MineField(5, 3, 4) {
+
+      @Override
+      protected List<Integer> generateRandomNumbers(int howMany) {
+        Integer[] numbers = {3, 4, 11, 14};
+        return Arrays.asList(numbers);
+      }
+    };
+    
+    Map<Integer, Square> squares = field.getSquares();
+
+    assertTrue(squares.get(2).getValue() == 1);
+    assertTrue(squares.get(8).getValue() == 3);
+    assertTrue(squares.get(9).getValue() == 3);
+    assertTrue(squares.get(10).getValue() == 1);
+    assertTrue(squares.get(13).getValue() == 1);
+    System.out.println(field);
+  }
 
 }

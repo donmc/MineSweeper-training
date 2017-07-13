@@ -20,7 +20,7 @@ public class MineSweeper implements IMineSweeper{
 	
 	private MineSweeper(int cols, int rows, int mines) throws Exception{
 		topSweeperManager = new TopSweeperManager();
-		initialize(cols,rows,mines);
+		initialize(cols,rows,mines); 
 	}
 
 	private MineSweeper() throws Exception{
@@ -105,7 +105,7 @@ public class MineSweeper implements IMineSweeper{
 
 	private void initialize(int cols, int rows, int mines) {
 	
-		board = new MineField();
+		board = new MineField(cols, rows, mines);
 
 		gameOver = false;
 		uncoveredCount = 0;

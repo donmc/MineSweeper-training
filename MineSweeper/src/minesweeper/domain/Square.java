@@ -7,7 +7,7 @@ public abstract class Square implements minesweeper.shared.ISquare{
 	private boolean isCovered;
 	
 	public Square(int location) {
-		this.location = location;
+		this.location = location; 
 		isCovered = true;
 	}
 
