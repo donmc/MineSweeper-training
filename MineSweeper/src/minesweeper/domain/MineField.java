@@ -6,7 +6,11 @@ class MineField {
 	private Map squares;
 	private List mineLocations; 
 
-	MineField() { 
+	public MineField() {
+    this(10, 10, 10);
+  }
+	
+	MineField(int cols, int rows, int mines) { 
 		squares = new HashMap(100);
 
 		for(int i=0;i<100;i++) {
@@ -14,7 +18,7 @@ class MineField {
 		}
 		
 		mineLocations = generateRandomNumbers(10);
-		
+		 
 		for(Iterator it = mineLocations.iterator();it.hasNext();) {
 			Integer location = (Integer)it.next();
 			Square mine = new MineSquare(location.intValue());
@@ -92,7 +96,7 @@ class MineField {
 		return neighbors;
 	}
 
-	private List generateRandomNumbers(int howMany) {
+	protected List generateRandomNumbers(int howMany) {
 		List randomNumbers = new ArrayList(howMany);
 
 		for(int i=0;i<howMany;i++) {
