@@ -30,9 +30,9 @@ class MineField {
 
       Square square = (Square) squares.get(new Integer(location));
       List<Integer> neighbors = getNeighbors(location);
-
-      for (Iterator it = neighbors.iterator(); it.hasNext();) {
-        square.addNeighbor(squares.get(it.next()));
+      
+      for (Integer neighbor : neighbors) {
+        square.addNeighbor(squares.get(neighbor));
       }
     }
   }
@@ -45,16 +45,15 @@ class MineField {
       Square mine = new MineSquare(location);
       squares.put(location, mine);
 
-      List<Integer> neighbors = getNeighbors(location.intValue());
+      List<Integer> neighbors = getNeighbors(location);
 
-      for (Iterator it2 = neighbors.iterator(); it2.hasNext();) {
-        location = (Integer) it2.next();
+      for (Integer neighbor : neighbors) {
 
-        if (squares.get(location) instanceof NumberSquare) {
-          NumberSquare ns = (NumberSquare) squares.get(location);
+        if (squares.get(neighbor) instanceof NumberSquare) {
+          NumberSquare ns = (NumberSquare) squares.get(neighbor);
           ns.incrementValue();
-        } else if (squares.get(location) instanceof BlankSquare) {
-          squares.put(location, new NumberSquare(location.intValue(), 1));
+        } else if (squares.get(neighbor) instanceof BlankSquare) {
+          squares.put(neighbor, new NumberSquare(neighbor, 1));
         }
       }
     }
