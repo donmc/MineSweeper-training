@@ -18,7 +18,7 @@ public class NumberSquare extends Square{
 			MineSweeper.getInstance().checkForWin(this);
 		}
 	}
-
+ 
 	public void setValue(int value) {
 		this.value = value;
 	}

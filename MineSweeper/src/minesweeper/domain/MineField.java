@@ -155,4 +155,13 @@ class MineField {
     Square square = squares.get(location);
     square.uncover();
   }
+
+  public void mark(int location) {
+    Square square = squares.get(location);
+    square.mark();
+  }
+
+  public int getNumberOfMines() {
+    return mines;
+  }
 }

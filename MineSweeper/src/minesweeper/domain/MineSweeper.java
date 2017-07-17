@@ -15,8 +15,8 @@ public class MineSweeper implements IMineSweeper{
 	private boolean counterRunning;
 	private boolean gameOver = true;
 
-	private List counterListeners = new ArrayList();
-	private List gameOverListeners = new ArrayList();
+	private List<CounterListener> counterListeners = new ArrayList<>();
+	private List<GameOverListener> gameOverListeners = new ArrayList<>();
 	
 	private MineSweeper(int cols, int rows, int mines) throws Exception{
 		topSweeperManager = new TopSweeperManager();
@@ -40,7 +40,7 @@ public class MineSweeper implements IMineSweeper{
 
 	void checkForWin(Object lastNonMine) {
 		int numOfSquares = board.getSquares().size();
-		if (uncoveredCount + mineCount == numOfSquares) {
+		if (uncoveredCount + board.getNumberOfMines() == numOfSquares) {
 			gameOver = true;
 			fireGameOver(true, lastNonMine);
 		}
@@ -61,8 +61,8 @@ public class MineSweeper implements IMineSweeper{
 	private void fireGameOver(boolean isWin, Object lastUncoveredSquare) {
 		
 		stopCounter();
-		for(Iterator it = gameOverListeners.iterator();it.hasNext();) {
-			GameOverListener gol = (GameOverListener)it.next();
+		for (GameOverListener gol : gameOverListeners) {
+      
 			if (isWin) {
 				gol.gameWon(new GameOverEvent(lastUncoveredSquare));
 			}else {
@@ -131,13 +131,12 @@ public class MineSweeper implements IMineSweeper{
 	}
 
 	private void fireCounterChanged() {
-		for(Iterator it = counterListeners.iterator();it.hasNext();) {
-			CounterListener cl = (CounterListener)it.next();
-			cl.counterChanged(new Integer(counter));
+	  for (CounterListener cl : counterListeners) {
+			cl.counterChanged(counter);
 		}
 	}
 
-	public Map getSquares(){
+	public Map<Integer, Square> getSquares(){
 
 		return board.getSquares();
 	}
@@ -151,7 +150,7 @@ public class MineSweeper implements IMineSweeper{
 	}
 
 	public void mark(int location) {
-		//TODO: not yet implemented
+		board.mark(location);
 	}
 
 	void incrementUncoveredCount() {

@@ -11,7 +11,7 @@ public class BlankSquare extends Square{
 
 	public void goNude() {
 		if (!MineSweeper.getInstance().isGameOver()) {
-
+ 
 			MineSweeper.getInstance().checkForWin(this);
 
 			for(Iterator it = neighbors.iterator();it.hasNext();) {

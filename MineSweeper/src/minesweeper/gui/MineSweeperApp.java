@@ -55,7 +55,7 @@ public class MineSweeperApp extends javax.swing.JFrame {
 
 	private JMenuItem newGameMenuItem;
 	private JMenuItem customMenuItem;
-	private JMenuItem exitMenuItem;
+	private JMenuItem exitMenuItem; 
 	private JMenuItem topSweepersMenuItem;
 
 	private int columns = 10;
@@ -439,7 +439,7 @@ public class MineSweeperApp extends javax.swing.JFrame {
 			public void mouseReleased(MouseEvent me) {
 				if (!game.isGameOver()) {
 					MineSweeperSquare square = (MineSweeperSquare) me.getSource();
-					if (square.contains(me.getX(),me.getY()) && !me.isPopupTrigger()) {
+					if (square.contains(me.getX(),me.getY()) && SwingUtilities.isLeftMouseButton(me)) {
 						int location = square.getSquareLocation();
 						uncoverSquareAt(location);
 					}
