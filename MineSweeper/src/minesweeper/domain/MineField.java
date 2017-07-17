@@ -9,6 +9,7 @@ class MineField {
   private int numberOfSquares;
   private int rows;
   private int cols;
+  private int mines;
 
   public MineField() {
     this(10, 10, 10);
@@ -17,11 +18,12 @@ class MineField {
   MineField(int cols, int rows, int mines) {
     this.rows = rows;
     this.cols = cols;
+    this.mines = mines;
     this.numberOfSquares = cols * rows;
     squares = new HashMap<>(numberOfSquares); 
 
     createBlankSquares();
-    createMineSquares(mines);
+    createMineSquares();
     getToKnowNeighbors();
   }
 
@@ -37,7 +39,7 @@ class MineField {
     }
   }
 
-  private void createMineSquares(int mines) {
+  private void createMineSquares() {
     mineLocations = generateRandomNumbers(mines);
 
     for (Integer location : mineLocations) {
@@ -47,14 +49,18 @@ class MineField {
 
       List<Integer> neighbors = getNeighbors(location);
 
-      for (Integer neighbor : neighbors) {
+      createNumberSquares(neighbors);
+    }
+  }
 
-        if (squares.get(neighbor) instanceof NumberSquare) {
-          NumberSquare ns = (NumberSquare) squares.get(neighbor);
-          ns.incrementValue();
-        } else if (squares.get(neighbor) instanceof BlankSquare) {
-          squares.put(neighbor, new NumberSquare(neighbor, 1));
-        }
+  private void createNumberSquares(List<Integer> neighbors) {
+    for (Integer neighbor : neighbors) {
+
+      if (squares.get(neighbor) instanceof NumberSquare) {
+        NumberSquare ns = (NumberSquare) squares.get(neighbor);
+        ns.incrementValue();
+      } else if (squares.get(neighbor) instanceof BlankSquare) {
+        squares.put(neighbor, new NumberSquare(neighbor, 1));
       }
     }
   }
